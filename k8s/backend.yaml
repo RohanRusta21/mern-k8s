@@ -48,7 +48,7 @@ kind: ConfigMap
 metadata:
   name: backend-cm
 data:
-  MONGO_URI: "mongodb://mongodb.default.svc.cluster.local:27017/mern-todo"
+  MONGO_URI: "mongodb://mongodb.default.svc.cluster.local:27017/mern-sts-todo"
   PORT: "5000"
 
 
