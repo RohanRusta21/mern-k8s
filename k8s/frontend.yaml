@@ -14,12 +14,9 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ttl.sh/frontend-mern-10:23h  # Replace with your image
+        image: ttl.sh/frontend-mern-11:23h  # Replace with your image
         ports:
         - containerPort: 80
-        env:
-        - name: REACT_APP_API_BASE_URL
-          value: "http://backend.default.svc.cluster.local:5000/api/todos"
 ---
 apiVersion: v1
 kind: Service

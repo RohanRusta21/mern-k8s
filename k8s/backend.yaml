@@ -19,9 +19,16 @@ spec:
         - containerPort: 5000
         env:
         - name: MONGO_URI
-          value: "mongodb://mongodb.default.svc.cluster.local:27017/mern-todo"
+          valueFrom:
+            configMapKeyRef:
+              name: backend-cm
+              key: MONGO_URI
         - name: PORT
-          value: "5000"
+          valueFrom:
+            configMapKeyRef:
+              name: backend-cm
+              key: PORT
+
 ---
 apiVersion: v1
 kind: Service
@@ -34,6 +41,15 @@ spec:
   - port: 5000
     targetPort: 5000
   type: ClusterIP
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-cm
+data:
+  MONGO_URI: "mongodb://mongodb.default.svc.cluster.local:27017/mern-todo"
+  PORT: "5000"
 
 
 
