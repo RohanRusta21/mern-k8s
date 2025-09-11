@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ttl.sh/backend-mern-10:23h  # Replace with your image
+        image: ttl.sh/backend-mern-1:23h  # Replace with your image
         ports:
         - containerPort: 5000
         env:
@@ -38,9 +38,10 @@ spec:
   selector:
     app: backend
   ports:
-  - port: 5000
+  - protocol: TCP
+    port: 80
     targetPort: 5000
-  type: ClusterIP
+  #type: ClusterIP #ClusterIP
 
 ---
 apiVersion: v1

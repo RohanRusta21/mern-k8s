@@ -4,7 +4,7 @@ import axios from 'axios';
 function App() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
-  const API_BASE_URL = 'http://backend.default.svc.cluster.local:5000/api/todos';
+  const API_BASE_URL = '/api/todos';
 
   useEffect(() => {
     fetchTodos();

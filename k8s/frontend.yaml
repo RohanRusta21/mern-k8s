@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ttl.sh/frontend-mern-11:23h  # Replace with your image
+        image: ttl.sh/frontend-mern-1:23h  # Replace with your image
         ports:
         - containerPort: 80
 ---
@@ -26,6 +26,7 @@ spec:
   selector:
     app: frontend
   ports:
-  - port: 80
+  - protocol: TCP
+    port: 80
     targetPort: 80
-  type: ClusterIP
+  #type: ClusterIP  #ClusterIP
