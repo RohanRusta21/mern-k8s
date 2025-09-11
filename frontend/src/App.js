@@ -22,12 +22,30 @@ function App() {
   const addTodo = async (e) => {
     e.preventDefault();
     if (!newTodo.trim()) return;
+    
+    // Log message when form is submitted (Enter pressed)
+    console.log('📝 Form submitted via Enter key - Adding todo:', newTodo);
+    
     try {
       await axios.post(API_BASE_URL, { text: newTodo });
       setNewTodo('');
       fetchTodos();
     } catch (error) {
       console.error('Error adding todo:', error);
+    }
+  };
+
+  // Handle input changes and log them
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    console.log('⌨️ Text input changed:', value);
+    setNewTodo(value);
+  };
+
+  // Handle key press events
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      console.log('↵ Enter key pressed - Current input:', newTodo);
     }
   };
 
@@ -50,9 +68,9 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+    <div>
       <h1>Todo List</h1>
-      <form onSubmit={addTodo} style={{ marginBottom: '20px' }}>
+      <form onSubmit={addTodo}>
         <input
           type="text"
           value={newTodo}
@@ -62,37 +80,24 @@ function App() {
         />
         <button type="submit">Add</button>
       </form>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul>
         {todos.map((todo) => (
-          <li key={todo._id} style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center',
-            padding: '10px',
-            margin: '5px 0',
-            backgroundColor: '#f5f5f5',
-            borderRadius: '4px'
-          }}>
-            <span style={{ 
-              textDecoration: todo.completed ? 'line-through' : 'none',
-              flex: 1
-            }}>
+          <li key={todo._id}>
+            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
               {todo.text}
             </span>
-            <div>
-              <button 
-                onClick={() => toggleComplete(todo._id, todo.completed)}
-                style={{ marginLeft: '10px' }}
-              >
-                {todo.completed ? 'Undo' : 'Complete'}
-              </button>
-              <button 
-                onClick={() => deleteTodo(todo._id)}
-                style={{ marginLeft: '10px', backgroundColor: '#ff4444', color: 'white' }}
-              >
-                Delete
-              </button>
-            </div>
+            <button
+              onClick={() => toggleComplete(todo._id, todo.completed)}
+              style={{ marginLeft: '10px' }}
+            >
+              {todo.completed ? 'Undo' : 'Complete'}
+            </button>
+            <button
+              onClick={() => deleteTodo(todo._id)}
+              style={{ marginLeft: '10px', backgroundColor: '#ff4444', color: 'white' }}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
