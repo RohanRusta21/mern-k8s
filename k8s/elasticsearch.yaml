@@ -1,0 +1,56 @@
+# ✅ Removed PVC for now (so pod won’t get stuck Pending on storage)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+          image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: ES_JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
+            - name: xpack.security.enabled
+              value: "false"
+          ports:
+            - containerPort: 9200
+          resources:
+            requests:
+              memory: "512Mi"   # 🔽 lowered so it can fit
+              cpu: "250m"
+            limits:
+              memory: "1Gi"     # 🔽 reduced from 4Gi → 1Gi
+              cpu: "500m"
+          # For dev only → no persistent storage (data lost if pod restarts)
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: elasticsearch-storage
+      volumes:
+        - name: elasticsearch-storage
+          emptyDir: {}   # 🔽 uses ephemeral storage (RAM/disk on node)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: logging
+spec:
+  selector:
+    app: elasticsearch
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9200
+  type: ClusterIP
