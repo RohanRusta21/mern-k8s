@@ -49,3 +49,15 @@ docker build -t mern-todo-frontend . && docker run -p 80:80 mern-todo-frontend.
 ```
 Ensure MongoDB is running (e.g., docker run -d -p 27017:27017 mongo).
 ```
+
+
+# How to setup and implement ingress (ingress controller)
+
+#### Add Ingress Controller to Cluster
+
+```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+helm install ingress-nginx ingress-nginx/ingress-nginx
+
+```
