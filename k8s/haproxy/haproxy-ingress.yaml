@@ -167,9 +167,9 @@ spec:
             type: RuntimeDefault
         resources:
           limits:
-            memory: 2560Mi
+            memory: 256Mi
           requests:
-            memory: 2048Mi
+            memory: 204Mi
         livenessProbe:
           httpGet:
             path: /healthz
