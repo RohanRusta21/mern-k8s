@@ -56,6 +56,43 @@ kubectl apply -f k8s/app/
 kubectl apply -f traefik/ingress.yaml
 ```
 
+### Some Info about INGRESS ROUTE
+
+```bash
+
+In Traefik, an IngressRoute is a Custom Resource Definition (CRD) that defines
+how incoming requests are routed to services within a Kubernetes cluster.
+It is a Traefik-specific resource that offers more advanced routing capabilities compared to the standard Kubernetes Ingress resource.
+
+Here's a breakdown of what an IngressRoute entails:
+
+
+Custom Resource Definition (CRD):
+
+IngressRoutes are not part of the standard Kubernetes API but are defined and managed by Traefik.
+You need to apply Traefik's Kubernetes CRDs to your cluster to enable their use.
+
+Enhanced Routing:
+
+IngressRoutes allow for more sophisticated routing rules than the basic host and path-based routing offered by Kubernetes Ingress.
+
+This includes features like:
+
+Middleware integration: Applying various middlewares (e.g., authentication, rate limiting, header manipulation) to requests before they reach the backend service.
+
+Advanced rule matching: Beyond host and path, you can define rules based on headers, methods, and more.
+
+Service load balancing: Configuring how traffic is distributed among multiple instances of a service. 
+
+HTTP, TCP, and UDP support:
+
+Traefik provides different IngressRoute CRDs for various protocols:
+        IngressRoute for HTTP routing.
+        IngressRouteTCP for TCP routing.
+        IngressRouteUDP for UDP routing.
+```
+
+
 ### Now lets deploy ingress route
 
 ```bash
